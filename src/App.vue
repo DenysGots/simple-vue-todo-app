@@ -1,29 +1,32 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
-  </div>
+  <v-app>
+    <div class="app-main-container d-flex align-center justify-center">
+      <TodoList></TodoList>
+    </div>
+  </v-app>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import HelloWorld from "./components/HelloWorld.vue";
+import { Component, Vue } from 'vue-property-decorator';
+import TodoList from './components/TodoList.vue';
 
 @Component({
   components: {
-    HelloWorld
+    TodoList
   }
 })
 export default class App extends Vue {}
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
+@import '../node_modules/vuetify/src/styles/main';
+
+.app-main-container {
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  -webkit-font-smoothing: antialiased;
   color: #2c3e50;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
   margin-top: 60px;
+  text-align: center;
 }
 </style>
