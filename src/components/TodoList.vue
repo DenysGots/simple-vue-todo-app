@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { find, flow, remove } from 'lodash/fp';
+import { cloneDeep, find, flow, remove } from 'lodash/fp';
 import { Component, Vue } from 'vue-property-decorator';
 
 import TodoItem from './TodoItem.vue';
@@ -79,12 +79,11 @@ export default class TodoList extends Vue {
 
   markItemsAsDone(itemId: string) {
     const markAsDone = (item: Item) => (item.closed = true);
-    // noinspection TypeScriptValidateTypes
     flow(find(['id', itemId]), markAsDone)(this.items);
+    this.items = cloneDeep(this.items);
   }
 
   deleteItem(itemId: string) {
-    // noinspection TypeScriptValidateTypes
     this.items = remove((item: Item) => item.id === itemId, this.items);
   }
 }
