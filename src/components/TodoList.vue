@@ -79,8 +79,9 @@ export default class TodoList extends Vue {
 
   markItemsAsDone(itemId: string) {
     const markAsDone = (item: Item) => (item.closed = true);
-    flow(find(['id', itemId]), markAsDone)(this.items);
-    this.items = cloneDeep(this.items);
+    const rewriteItemsList = () => (this.items = cloneDeep(this.items));
+    flow(find(['id', itemId]), markAsDone, rewriteItemsList)(this.items);
+    // this.items = cloneDeep(this.items);
   }
 
   deleteItem(itemId: string) {

@@ -2,6 +2,12 @@
   <div class="app-new-item-form">
     <v-form ref="form" :lazy-validation="true">
       <v-container>
+        <div>
+          <h4>
+            Add new item
+          </h4>
+        </div>
+
         <v-row>
           <v-col cols="12" md="5">
             <v-text-field v-model="item.title" label="Title" required></v-text-field>
@@ -39,4 +45,8 @@ export default class NewItemForm extends Vue {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.app-new-item-form {
+  margin-left: 15px;
+}
+</style>
