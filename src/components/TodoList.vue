@@ -4,8 +4,8 @@
       <v-list v-bind:three-line="true">
         <v-list-item-group>
           <TodoItem
-            v-for="(item, i) in items"
-            :key="i"
+            v-for="item in items"
+            v-bind:key="item.id"
             v-bind:item="item"
             v-on:on-mark-item-as-done="markItemsAsDone($event)"
             v-on:on-delete-item="deleteItem($event)"
@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { cloneDeep, find, flow, remove } from 'lodash/fp';
+import { remove } from 'lodash/fp';
 import { Component, Vue } from 'vue-property-decorator';
 
 import TodoItem from './TodoItem.vue';
@@ -72,16 +72,15 @@ export default class TodoList extends Vue {
       ...this.items,
       {
         ...item,
-        id: performance.now().toString()
+        id: performance.now().toString(),
+        closed: false
       }
     ];
   }
 
   markItemsAsDone(itemId: string) {
-    const markAsDone = (item: Item) => (item.closed = true);
-    const rewriteItemsList = () => (this.items = cloneDeep(this.items));
-    flow(find(['id', itemId]), markAsDone, rewriteItemsList)(this.items);
-    // this.items = cloneDeep(this.items);
+    const itemToChangeIndex = this.items.findIndex((item: Item) => item.id === itemId);
+    this.$set(this.items, itemToChangeIndex, { ...this.items[itemToChangeIndex], closed: true });
   }
 
   deleteItem(itemId: string) {
