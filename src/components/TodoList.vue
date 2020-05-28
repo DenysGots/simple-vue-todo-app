@@ -20,18 +20,11 @@
 </template>
 
 <script lang="ts">
-import { remove } from 'lodash/fp';
 import { Component, Vue } from 'vue-property-decorator';
 
+import { Item, defaultItems } from '@/public-api';
 import TodoItem from './TodoItem.vue';
 import NewItemForm from './NewItemForm.vue';
-
-export interface Item {
-  id: string;
-  title: string;
-  subtitle: string;
-  closed: boolean;
-}
 
 @Component({
   components: {
@@ -40,51 +33,28 @@ export interface Item {
   }
 })
 export default class TodoList extends Vue {
-  items: Item[] = [
-    {
-      id: '1',
-      title: 'Title 1',
-      subtitle: 'Task 1',
-      closed: true
-    },
-    {
-      id: '2',
-      title: 'Title 2',
-      subtitle: 'Task 2',
-      closed: false
-    },
-    {
-      id: '3',
-      title: 'Title 3',
-      subtitle: 'Task 3',
-      closed: false
-    },
-    {
-      id: '4',
-      title: 'Title 4',
-      subtitle: 'Task 4',
-      closed: false
-    }
-  ];
+  mounted() {
+    this.$store.dispatch('addItems', defaultItems);
+  }
+
+  get items(): Item[] {
+    return this.$store.state.items;
+  }
 
   addItem(item: Item) {
-    this.items = [
-      ...this.items,
-      {
-        ...item,
-        id: performance.now().toString(),
-        closed: false
-      }
-    ];
+    this.$store.dispatch('addItem', {
+      ...item,
+      id: performance.now().toString(),
+      closed: false
+    });
   }
 
   markItemsAsDone(itemId: string) {
-    const itemToChangeIndex = this.items.findIndex((item: Item) => item.id === itemId);
-    this.$set(this.items, itemToChangeIndex, { ...this.items[itemToChangeIndex], closed: true });
+    this.$store.dispatch('markItemsAsDone', itemId);
   }
 
   deleteItem(itemId: string) {
-    this.items = remove((item: Item) => item.id === itemId, this.items);
+    this.$store.dispatch('deleteItem', itemId);
   }
 }
 </script>

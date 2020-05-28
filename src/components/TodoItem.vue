@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
-import { Item } from './TodoList.vue';
+import { Item } from '@/public-api';
 
 @Component
 export default class TodoItem extends Vue {
