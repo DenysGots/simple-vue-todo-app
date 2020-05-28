@@ -7,7 +7,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test": "vue-cli-service test:unit",
-    "prod": "prettier --write \"src/**/*.{ts,vue}\"",
+    "prod": "prettier --write \"src/**/*.{ts,vue}\""
   },
   "dependencies": {
     "core-js": "^3.6.5",
