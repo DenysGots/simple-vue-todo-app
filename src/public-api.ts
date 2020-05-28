@@ -29,11 +29,5 @@ export const defaultItems: Item[] = [
     title: 'Title 4',
     subtitle: 'Task 4',
     closed: false
-  },
-  {
-    id: '5',
-    title: 'Title 5',
-    subtitle: 'Task 5',
-    closed: false
   }
 ];
